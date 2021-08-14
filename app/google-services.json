@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "435831570722",
+    "firebase_url": "https://carevent-98b7a-default-rtdb.firebaseio.com",
+    "project_id": "carevent-98b7a",
+    "storage_bucket": "carevent-98b7a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:435831570722:android:6b8ab70125350fb9eaa57b",
+        "android_client_info": {
+          "package_name": "com.yanus.carevent"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "435831570722-psci4uenhecvg3650ir82461golhin17.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBP8IhNU3WvVksFNDDQM1NrmZHCz1U3gXE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "435831570722-psci4uenhecvg3650ir82461golhin17.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
