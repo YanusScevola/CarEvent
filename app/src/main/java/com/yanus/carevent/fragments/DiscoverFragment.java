@@ -14,13 +14,13 @@ import java.util.Calendar;
 import java.util.Date;
 
 
-public class UserDiscoverFragment extends Fragment {
-    public UserDiscoverFragment() { }
+public class DiscoverFragment extends Fragment {
+    public DiscoverFragment() { }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_user_discover, container, false);
+        final View view = inflater.inflate(R.layout.fragment_discover, container, false);
 
         return view;
     }

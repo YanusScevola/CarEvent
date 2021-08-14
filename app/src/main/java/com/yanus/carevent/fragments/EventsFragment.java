@@ -12,15 +12,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.yanus.carevent.R;
 
 
-public class UserEventsFragment extends Fragment {
-    public UserEventsFragment() { }
+public class EventsFragment extends Fragment {
+    public EventsFragment() { }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_user_events, container, false);
-        final FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
+        final View view = inflater.inflate(R.layout.fragment_events, container, false);
         return view;
     }
 }
