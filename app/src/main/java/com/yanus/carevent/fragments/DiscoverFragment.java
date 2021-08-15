@@ -18,20 +18,10 @@ public class DiscoverFragment extends Fragment {
     public DiscoverFragment() { }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_discover, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_discover, container, false);
 
-        return view;
+
     }
 
-    public static Date getTodayDate() {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(new Date());
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-        return cal.getTime();
-    }
 }
