@@ -2,6 +2,7 @@ package com.yanus.carevent.activity;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -27,7 +28,6 @@ public class UserMainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         binding.navigation.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Fragment fragment = null;
@@ -35,15 +35,22 @@ public class UserMainActivity extends AppCompatActivity {
                     case R.id.discover:
                         fragment = new DiscoverFragment();
                         setColorNavigationItem(R.id.discover, R.color.colorButton);
-
+                        setColorNavigationItem(R.id.myevents, R.color.colorPanel);
+                        setColorNavigationItem(R.id.profile, R.color.colorPanel);
                         break;
+
                     case R.id.myevents:
                         fragment = new EventsFragment();
                         setColorNavigationItem(R.id.myevents, R.color.colorButton);
+                        setColorNavigationItem(R.id.discover, R.color.colorPanel);
+                        setColorNavigationItem(R.id.profile, R.color.colorPanel);
                         break;
+
                     case R.id.profile:
                         fragment = new ProfileFragment();
                         setColorNavigationItem(R.id.profile, R.color.colorButton);
+                        setColorNavigationItem(R.id.discover, R.color.colorPanel);
+                        setColorNavigationItem(R.id.myevents, R.color.colorPanel);
                         break;
                 }
                 getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
@@ -55,20 +62,14 @@ public class UserMainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
-        View navigationItemDiscover = findViewById(R.id.myevents);
-        int color = Color.parseColor("#"+Integer.toHexString(ContextCompat.getColor(UserMainActivity.this, R.color.colorButton)));
-        navigationItemDiscover.setBackgroundColor(color);
-
+        setColorNavigationItem(R.id.myevents, R.color.colorButton);
     }
 
-    public void setColorNavigationItem(int viewId, int colorId){
+    public void setColorNavigationItem(int viewId, int colorId) {
         View navigationItemDiscover = findViewById(viewId);
-        int color = Color.parseColor("#"+Integer.toHexString(ContextCompat.getColor(UserMainActivity.this, colorId)));
+        int color = Color.parseColor("#" + Integer.toHexString(ContextCompat.getColor(UserMainActivity.this, colorId)));
         navigationItemDiscover.setBackgroundColor(color);
     }
-
-
 
 
 }
