@@ -5,6 +5,8 @@
         <item name="colorPrimary">@color/colorButton</item>
         <item name="colorPrimaryVariant">@color/colorPanel</item>
         <item name="colorOnPrimary">@color/red</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/red</item>
         <item name="colorSecondaryVariant">@color/design_default_color_primary_dark</item>

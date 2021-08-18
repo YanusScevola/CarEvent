@@ -21,11 +21,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.yanus.carevent.databinding.ActivitySignUpBinding;
+import com.yanus.carevent.model.UserModel;
 
 import java.util.Objects;
 
 public class SignUpActivity extends AppCompatActivity {
-    ActivitySignUpBinding binding;
+    public ActivitySignUpBinding binding;
+    public FirebaseAuth firebaseAuth;
+    public FirebaseDatabase firebaseDatabase;
+    public DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +37,9 @@ public class SignUpActivity extends AppCompatActivity {
         binding = ActivitySignUpBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
+        databaseReference = firebaseDatabase.getReference();
 
 
         binding.signUpBtn.setOnClickListener(new View.OnClickListener() {
@@ -48,16 +54,14 @@ public class SignUpActivity extends AppCompatActivity {
                     binding.nickname.setError("Введите никнейм");
                 }
 
-
                 if (TextUtils.isEmpty(email)) {
                     binding.email.setError("Введите emile");
                     return;
-                } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-                        Log.i("key", "Проверка 1");
-                        return;
+                } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                    Log.i("key", "Проверка 1");
+                    return;
                 }
 
-                
                 if (TextUtils.isEmpty(password)) {
                     binding.password.setError("Введите password");
                     return;
@@ -72,8 +76,11 @@ public class SignUpActivity extends AppCompatActivity {
                                     Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                                     startActivity(intent);
 
+                                    DatabaseReference userReference = databaseReference.child("Users");
+                                    //userReference.setValue();
+
                                 } else {
-                                    Toast.makeText(getApplicationContext(), "НЕ работает", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), "НЕ зарегистрировался", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });

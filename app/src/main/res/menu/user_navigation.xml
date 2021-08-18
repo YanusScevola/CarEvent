@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/chat"
+        android:state_checked="false"
+        android:title="Chat"
+        android:icon="@drawable/ic_baseline_chat_24" />
+
+    <item
         android:id="@+id/discover"
-        android:state_checked="true"
+        android:state_checked="false"
         android:title="Discover"
         android:icon="@drawable/ic_compass" />
 
     <item
         android:id="@+id/myevents"
         android:state_checked="false"
-        android:title="My Events"
+        android:title="Events"
         android:icon="@drawable/ic_schedule" />
 
     <item

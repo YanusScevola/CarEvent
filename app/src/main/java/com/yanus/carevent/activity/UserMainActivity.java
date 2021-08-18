@@ -12,8 +12,11 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 import com.yanus.carevent.R;
 import com.yanus.carevent.databinding.ActivityUserMainBinding;
+import com.yanus.carevent.fragments.ChatFragment;
 import com.yanus.carevent.fragments.DiscoverFragment;
 import com.yanus.carevent.fragments.EventsFragment;
 import com.yanus.carevent.fragments.ProfileFragment;
@@ -27,6 +30,10 @@ public class UserMainActivity extends AppCompatActivity {
         binding = ActivityUserMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        setColorNavigationItem(R.id.myevents, R.color.colorButton);
+        MenuItem menuItem = binding.navigation.getMenu().getItem(2).setChecked(true);
+
+
         binding.navigation.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -37,6 +44,7 @@ public class UserMainActivity extends AppCompatActivity {
                         setColorNavigationItem(R.id.discover, R.color.colorButton);
                         setColorNavigationItem(R.id.myevents, R.color.colorPanel);
                         setColorNavigationItem(R.id.profile, R.color.colorPanel);
+                        setColorNavigationItem(R.id.chat, R.color.colorPanel);
                         break;
 
                     case R.id.myevents:
@@ -44,11 +52,21 @@ public class UserMainActivity extends AppCompatActivity {
                         setColorNavigationItem(R.id.myevents, R.color.colorButton);
                         setColorNavigationItem(R.id.discover, R.color.colorPanel);
                         setColorNavigationItem(R.id.profile, R.color.colorPanel);
+                        setColorNavigationItem(R.id.chat, R.color.colorPanel);
                         break;
 
                     case R.id.profile:
                         fragment = new ProfileFragment();
                         setColorNavigationItem(R.id.profile, R.color.colorButton);
+                        setColorNavigationItem(R.id.discover, R.color.colorPanel);
+                        setColorNavigationItem(R.id.myevents, R.color.colorPanel);
+                        setColorNavigationItem(R.id.chat, R.color.colorPanel);
+                        break;
+
+                    case R.id.chat:
+                        fragment = new ChatFragment();
+                        setColorNavigationItem(R.id.chat, R.color.colorButton);
+                        setColorNavigationItem(R.id.profile, R.color.colorPanel);
                         setColorNavigationItem(R.id.discover, R.color.colorPanel);
                         setColorNavigationItem(R.id.myevents, R.color.colorPanel);
                         break;
@@ -59,12 +77,7 @@ public class UserMainActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        setColorNavigationItem(R.id.myevents, R.color.colorButton);
-    }
-
+    //TODO: Оптимизировать код, чтобы в swich небыло повторений данного метода
     public void setColorNavigationItem(int viewId, int colorId) {
         View navigationItemDiscover = findViewById(viewId);
         int color = Color.parseColor("#" + Integer.toHexString(ContextCompat.getColor(UserMainActivity.this, colorId)));

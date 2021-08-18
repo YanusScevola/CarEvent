@@ -1,10 +1,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.CarEvent" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
+    <style name="Theme.CarEvent" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/colorButton</item>
         <item name="colorPrimaryVariant">@color/cardview_dark_background</item>
         <item name="colorOnPrimary">@color/red</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/material_on_primary_emphasis_high_type</item>
         <item name="colorSecondaryVariant">@color/design_default_color_primary_dark</item>

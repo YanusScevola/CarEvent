@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,17 +24,14 @@ public class EventsRecyclerAdapter extends RecyclerView.Adapter<EventsRecyclerAd
 
     @Override
     public EventsRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-        //View view = inflater.inflate(R.layout., parent, false);
-        return null;//new ViewHolder(view);
+        View view = inflater.inflate(R.layout.event_item, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(EventsRecyclerAdapter.ViewHolder holder, int position) {
-        EventModel state = states.get(position);
-//        holder.flagView.setImageResource(state.getFlagResource());
-//        holder.nameView.setText(state.getName());
-//        holder.capitalView.setText(state.getCapital());
+        EventModel eventModel = states.get(position);
+        holder.eventImageItem.setImageURI(eventModel.getImage());
     }
 
     @Override
@@ -42,14 +40,11 @@ public class EventsRecyclerAdapter extends RecyclerView.Adapter<EventsRecyclerAd
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-//        final ImageView flagView;
-//        final TextView nameView, capitalView;
+        public ImageView eventImageItem;
 
         ViewHolder(View view) {
             super(view);
-//            flagView = (ImageView) view.findViewById(R.id.flag);
-//            nameView = (TextView) view.findViewById(R.id.name);
-//            capitalView = (TextView) view.findViewById(R.id.capital);
+            eventImageItem = view.findViewById(R.id.imageViewEvent);
         }
     }
 
