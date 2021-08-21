@@ -76,8 +76,10 @@ public class SignUpActivity extends AppCompatActivity {
                                     Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                                     startActivity(intent);
 
-                                    DatabaseReference userReference = databaseReference.child("Users");
-                                    //userReference.setValue();
+                                    DatabaseReference usersRef = databaseReference.child("users");
+                                    DatabaseReference currentUserRef = usersRef.child(Objects.requireNonNull(firebaseAuth.getCurrentUser().getUid()));
+                                    DatabaseReference currentUserNicknameRef = currentUserRef.child("nickname");
+                                    currentUserNicknameRef.setValue(nickname);
 
                                 } else {
                                     Toast.makeText(getApplicationContext(), "НЕ зарегистрировался", Toast.LENGTH_SHORT).show();

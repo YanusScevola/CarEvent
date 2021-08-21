@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.CarEvent" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/colorButton</item>
+        <item name="colorPrimary">#1E6DC1</item>
         <item name="colorPrimaryVariant">@color/colorPanel</item>
         <item name="colorOnPrimary">@color/red</item>
         <item name="android:windowTranslucentStatus">true</item>

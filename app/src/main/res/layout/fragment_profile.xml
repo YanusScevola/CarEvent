@@ -1,61 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".fragments.ProfileFragment">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="222dp">
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/image_profile_background" />
+
+        <ImageView
+            android:id="@+id/singOut"
+            android:layout_width="60dp"
+            android:layout_height="65dp"
+            android:layout_gravity="right"
+            android:paddingTop="35dp"
+            android:paddingEnd="10dp"
+            android:src="@drawable/ic_baseline_login" />
+
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/profile_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:src="@drawable/image_profile"
+            app:civ_border_color="#FF000000"
+            app:civ_border_width="2dp" />
+
+        <TextView
+            android:id="@+id/nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingTop="150dp"
+            android:shadowColor="@color/black"
+            android:text="Никнейм"
+            android:textColor="@color/white"
+            android:textSize="30dp" />
+
+    </FrameLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="1dp"
         android:orientation="vertical">
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="222dp">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="22dp"
+            android:text="Фото"
+            android:textColor="@color/white" />
 
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/image_profile_background" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button2"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="друзья"
+            android:textColor="@color/white" />
 
-            <ImageView
-                android:id="@+id/singOut"
-                android:layout_width="50dp"
-                android:layout_height="60dp"
-                android:paddingTop="30dp"
-                android:paddingEnd="10dp"
-                android:layout_gravity="right"
-                android:src="@drawable/ic_baseline_login"/>
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/profile_image"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center"
-                android:src="@drawable/image_profile"
-                app:civ_border_width="2dp"
-                app:civ_border_color="#FF000000"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Никнейм"
-                android:shadowColor="@color/black"
-                android:layout_gravity="center"
-                android:textSize="30dp"
-                android:paddingTop="150dp"
-                android:textColor="@color/white"/>
-
-        </FrameLayout>
-
-
-
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button3"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Настройки"
+            android:textColor="@color/white" />
 
     </LinearLayout>
 
-</FrameLayout>
+</LinearLayout>
