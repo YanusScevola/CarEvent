@@ -56,6 +56,8 @@ public class UserMainActivity extends AppCompatActivity {
                         break;
                     case 3:
                         setColorsCombination(viewList, binding.navigation.getMenu().getItem(3));
+
+
                         break;
                 }
             }
@@ -74,15 +76,19 @@ public class UserMainActivity extends AppCompatActivity {
 
                     case R.id.chat:
                         setColorsCombination(viewList, binding.navigation.getMenu().getItem(0));
+                        viewPager2.setCurrentItem(0);
                         break;
                     case R.id.discover:
                         setColorsCombination(viewList, binding.navigation.getMenu().getItem(1));
+                        viewPager2.setCurrentItem(1);
                         break;
                     case R.id.myevents:
                         setColorsCombination(viewList, binding.navigation.getMenu().getItem(2));
+                        viewPager2.setCurrentItem(2);
                         break;
                     case R.id.profile:
                         setColorsCombination(viewList, binding.navigation.getMenu().getItem(3));
+                        viewPager2.setCurrentItem(3);
                         break;
                 }
                 return true;

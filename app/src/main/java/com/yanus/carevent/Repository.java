@@ -46,7 +46,6 @@ public class Repository {
 
     public Uri getCurrentUserImageProfile(String uid) {
         currentUserProfileImageRef = storageInstance.getReference().child("user/" + uid + "/profile.jpg");
-
         currentUserProfileImageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
@@ -61,13 +60,10 @@ public class Repository {
         return image;
     }
 
-    public void uploadImageToFirebase(Fragment fragment, Uri image, ImageView imageView) {
+    public void uploadImageToFirebase(Fragment fragment, Uri image) {
         currentUserProfileImageRef.putFile(image).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                if (fragment.getActivity() != null) {
-                    Glide.with(fragment).load(image).centerCrop().into(imageView);
-                }
                 Toast.makeText(fragment.getContext(), "Фото добавленно", Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {

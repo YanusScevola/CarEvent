@@ -21,13 +21,19 @@ import com.yanus.carevent.fragments.ProfileFragment;
 import java.util.List;
 
 public class FragmentsSwipeAdapter extends FragmentStateAdapter  {
+    ChatFragment chatFragment;
+    DiscoverFragment discoverFragment;
+    EventsFragment eventsFragment;
+    ProfileFragment profileFragment;
 
 
     public FragmentsSwipeAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
+        this.chatFragment = new ChatFragment();
+        this.discoverFragment = new DiscoverFragment();
+        this.eventsFragment = new EventsFragment();
+        this.profileFragment = new ProfileFragment();
     }
-
-
 
     @NonNull
     @Override
@@ -35,13 +41,13 @@ public class FragmentsSwipeAdapter extends FragmentStateAdapter  {
 
         switch (position){
             case 0:
-                return new ChatFragment();
+                return chatFragment;
             case 1:
-                return new DiscoverFragment();
+                return discoverFragment;
             case 2:
-                return new EventsFragment();
+                return eventsFragment;
             case 3:
-                return new ProfileFragment();
+                return profileFragment;
             default: return null;
         }
 
@@ -52,8 +58,19 @@ public class FragmentsSwipeAdapter extends FragmentStateAdapter  {
         return 4;
     }
 
+    public ChatFragment getChatFragment() {
+        return chatFragment;
+    }
 
+    public DiscoverFragment getDiscoverFragment() {
+        return discoverFragment;
+    }
 
+    public EventsFragment getEventsFragment() {
+        return eventsFragment;
+    }
 
-
+    public ProfileFragment getProfileFragment() {
+        return profileFragment;
+    }
 }

@@ -39,7 +39,6 @@ public class ProfileFragment extends Fragment {
     public ActivityResultLauncher<String> resultContent;
     public FirebaseStorage storage;
     public DatabaseReference currentUserNicknameRef;
-   // public StorageReference currentUserProfileImageRef;
     public FirebaseAuth firebaseAuth;
     public FirebaseDatabase firebaseDatabase;
     public Uri uriImage;
@@ -52,7 +51,6 @@ public class ProfileFragment extends Fragment {
         imageViewSingOut = view.findViewById(R.id.singOut);
         imageViewProfile = view.findViewById(R.id.profile_image);
         textViewNickname = view.findViewById(R.id.nickname);
-
     }
 
 
@@ -95,7 +93,8 @@ public class ProfileFragment extends Fragment {
                 new ActivityResultCallback<Uri>() {
                     @Override
                     public void onActivityResult(Uri uri) {
-                        Repository.getInstance().uploadImageToFirebase(ProfileFragment.this, uri, imageViewProfile);
+                        Repository.getInstance().uploadImageToFirebase(ProfileFragment.this, uri);
+                        Glide.with(ProfileFragment.this).load(uri).centerCrop().into(imageViewProfile);
                     }
                 });
     }
@@ -117,18 +116,18 @@ public class ProfileFragment extends Fragment {
 
         //Get and set a profile image into view.
         StorageReference currentUserProfileImageRef = storage.getReference().child("user/" + firebaseAuth.getCurrentUser().getUid() + "/profile.jpg");
-        currentUserProfileImageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                if (getActivity() != null ) {
-                    Glide.with(ProfileFragment.this).load(uri).centerCrop().into(imageViewProfile);
-                }
-            }
-        });
+//        currentUserProfileImageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//            @Override
+//            public void onSuccess(Uri uri) {
+//                if (getActivity() != null) {
+//                    Glide.with(ProfileFragment.this).load(uri).centerCrop().into(imageViewProfile);
+//                }
+//            }
+//        });
 
         imageViewSingOut.setOnClickListener(view -> {
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(ProfileFragment.this.getActivity(), MainActivity.class));
+            FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(ProfileFragment.this.getActivity(), MainActivity.class));
         });
 
         imageViewProfile.setOnClickListener(view -> {
@@ -137,20 +136,11 @@ public class ProfileFragment extends Fragment {
     }
 
 
-
-
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable("uri", uriImage);
     }
-
-
-
-
-
-
-
 
 
 }
