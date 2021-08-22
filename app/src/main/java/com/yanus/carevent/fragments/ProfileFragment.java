@@ -20,8 +20,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -31,14 +29,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-import com.yanus.carevent.EventApi;
+import com.yanus.carevent.Repository;
 import com.yanus.carevent.R;
 import com.yanus.carevent.activity.MainActivity;
-import com.yanus.carevent.activity.UserMainActivity;
-
-import java.security.PublicKey;
-import java.util.Objects;
 
 public class ProfileFragment extends Fragment {
     public ImageView imageViewSingOut, imageViewProfile;
@@ -102,7 +95,7 @@ public class ProfileFragment extends Fragment {
                 new ActivityResultCallback<Uri>() {
                     @Override
                     public void onActivityResult(Uri uri) {
-                        EventApi.getInstance().uploadImageToFirebase(ProfileFragment.this, uri, imageViewProfile);
+                        Repository.getInstance().uploadImageToFirebase(ProfileFragment.this, uri, imageViewProfile);
                     }
                 });
     }
@@ -119,7 +112,7 @@ public class ProfileFragment extends Fragment {
         super.onStart();
         Log.i("ProfileFragment", "onStart");
 
-        uriImage = EventApi.getInstance().getCurrentUserImageProfile(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        uriImage = Repository.getInstance().getCurrentUserImageProfile(FirebaseAuth.getInstance().getCurrentUser().getUid());
         Glide.with(ProfileFragment.this).load(uriImage).centerCrop().into(imageViewProfile);
 
         //Get and set a profile image into view.

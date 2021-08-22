@@ -3,6 +3,7 @@ package com.yanus.carevent.activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -30,11 +31,8 @@ public class UserMainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         binding.navigation.getMenu().getItem(2).setChecked(true);
-
         List<Integer> viewList = Arrays.asList(R.id.chat, R.id.discover, R.id.myevents, R.id.profile);
 
-
-        //TODO: Нужно реализовать ViewPager а не ViewPager2
         ViewPager2 viewPager2 = findViewById(R.id.pager);
         viewPager2.setAdapter(new FragmentsSwipeAdapter(UserMainActivity.this));
         viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
@@ -46,77 +44,68 @@ public class UserMainActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-                //Log.i("key", position+"a");
+                switch (position) {
+                    case 0:
+                        setColorsCombination(viewList, binding.navigation.getMenu().getItem(0));
+                        break;
+                    case 1:
+                        setColorsCombination(viewList, binding.navigation.getMenu().getItem(1));
+                        break;
+                    case 2:
+                        setColorsCombination(viewList, binding.navigation.getMenu().getItem(2));
+                        break;
+                    case 3:
+                        setColorsCombination(viewList, binding.navigation.getMenu().getItem(3));
+                        break;
+                }
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
                 super.onPageScrollStateChanged(state);
-                Log.i("key", savedInstanceState+"a");
             }
         });
-
-
-
-
 
 
         binding.navigation.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                Fragment fragment = null;
                 switch (item.getItemId()) {
 
                     case R.id.chat:
-                        setColorsCombination(viewList, R.id.chat);
-                        //viewPager2.setAdapter(new FragmentsSwipeAdapter(UserMainActivity.this, viewList, R.id.chat));
-
-                        //fragment = new ChatFragment();
+                        setColorsCombination(viewList, binding.navigation.getMenu().getItem(0));
                         break;
-
                     case R.id.discover:
-                        setColorsCombination(viewList, R.id.discover);
-                        //viewPager2.setAdapter(new FragmentsSwipeAdapter(UserMainActivity.this, viewList, R.id.discover));
-
-                        //fragment = new DiscoverFragment();
+                        setColorsCombination(viewList, binding.navigation.getMenu().getItem(1));
                         break;
-
                     case R.id.myevents:
-                        setColorsCombination(viewList, R.id.myevents);
-                        //fragment = new EventsFragment();
-                       // viewPager2.setAdapter(new FragmentsSwipeAdapter(UserMainActivity.this, viewList, R.id.myevents));
+                        setColorsCombination(viewList, binding.navigation.getMenu().getItem(2));
                         break;
-
                     case R.id.profile:
-                        setColorsCombination(viewList, R.id.profile);
-                       // viewPager2.setAdapter(new FragmentsSwipeAdapter(UserMainActivity.this, viewList, R.id.profile));
-                        //fragment = new ProfileFragment();
+                        setColorsCombination(viewList, binding.navigation.getMenu().getItem(3));
                         break;
                 }
-                //getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
                 return true;
             }
         });
+
     }
 
 
 
-    public void setColorsCombination(List<Integer> viewsId, int mainView){
-
+    public void setColorsCombination(List<Integer> viewsId, MenuItem menuItem){
         int colorPanel = Color.parseColor("#" + Integer.toHexString(ContextCompat.getColor(UserMainActivity.this, R.color.colorPanel)));
         int colorButton = Color.parseColor("#" + Integer.toHexString(ContextCompat.getColor(UserMainActivity.this, R.color.colorButton)));
 
         for(int viewId : viewsId){
-            if (viewId == mainView) {
+            if (viewId == menuItem.getItemId()) {
                 findViewById(viewId).setBackgroundColor(colorButton);
+                menuItem.setChecked(true);
+
             }else {
                 findViewById(viewId).setBackgroundColor(colorPanel);
             }
-
         }
-
-
     }
 
 

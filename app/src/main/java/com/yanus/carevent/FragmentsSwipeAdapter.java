@@ -21,13 +21,10 @@ import com.yanus.carevent.fragments.ProfileFragment;
 import java.util.List;
 
 public class FragmentsSwipeAdapter extends FragmentStateAdapter  {
-    FragmentActivity fragmentActivity;
 
 
     public FragmentsSwipeAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
-        this.fragmentActivity = fragmentActivity;
-
     }
 
 

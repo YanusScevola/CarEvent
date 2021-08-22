@@ -1,13 +1,9 @@
 package com.yanus.carevent;
 
-import android.content.Context;
 import android.net.Uri;
-import android.util.Log;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
@@ -20,32 +16,29 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.yanus.carevent.fragments.ProfileFragment;
 
-import java.util.logging.Handler;
-
-public class EventApi {
+public class Repository {
     private StorageReference currentUserProfileImageRef;
-    private static EventApi instance;
+    private static Repository instance;
     FirebaseStorage storageInstance;
     FirebaseAuth firebaseAuth;
     public Uri image;
 
-    private EventApi() {
+    private Repository() {
         firebaseAuth = FirebaseAuth.getInstance();
         storageInstance = FirebaseStorage.getInstance();
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
 
-        DatabaseReference currentUserNicknameRef = firebaseDatabase.getReference()
-                .child("users")
-                .child(firebaseAuth.getCurrentUser().getUid())
-                .child("nickname");
+//        DatabaseReference currentUserNicknameRef = firebaseDatabase.getReference()
+//                .child("users")
+//                .child(firebaseAuth.getCurrentUser().getUid())
+//                .child("nickname");
 
     }
 
-    public static synchronized EventApi getInstance() {
+    public static synchronized Repository getInstance() {
         if (instance == null) {
-            instance = new EventApi();
+            instance = new Repository();
         }
         return instance;
     }
