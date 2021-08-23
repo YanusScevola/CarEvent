@@ -1,17 +1,15 @@
-package com.yanus.carevent;
+package com.yanus.carevent.service;
 
 import android.net.Uri;
-import android.widget.ImageView;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -36,7 +34,7 @@ public class Repository {
 
     }
 
-    public static synchronized Repository getInstance() {
+    public static Repository getInstance() {
         if (instance == null) {
             instance = new Repository();
         }
@@ -50,6 +48,9 @@ public class Repository {
             @Override
             public void onSuccess(Uri uri) {
                 image = uri;
+                Log.i("key", "1");
+                //TODO: Нужно использувать LiveData.
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -57,6 +58,8 @@ public class Repository {
 
             }
         });
+
+        Log.i("key", "2");
         return image;
     }
 
@@ -74,8 +77,5 @@ public class Repository {
         });
     }
 
-    public void w(Fragment fragment, Uri image, ImageView imageView){
 
-
-    }
 }

@@ -20,7 +20,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,8 +27,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.yanus.carevent.Repository;
+import com.yanus.carevent.service.Repository;
 import com.yanus.carevent.R;
 import com.yanus.carevent.activity.MainActivity;
 
@@ -111,11 +109,13 @@ public class ProfileFragment extends Fragment {
         super.onStart();
         Log.i("ProfileFragment", "onStart");
 
-        uriImage = Repository.getInstance().getCurrentUserImageProfile(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        uriImage = Repository.getInstance().getCurrentUserImageProfile(firebaseAuth.getCurrentUser().getUid());
+        if (uriImage == null) Toast.makeText(getContext(), "uriImage = null", Toast.LENGTH_SHORT).show();
+        if (uriImage != null) Toast.makeText(getContext(), "uriImage работает", Toast.LENGTH_SHORT).show();
         Glide.with(ProfileFragment.this).load(uriImage).centerCrop().into(imageViewProfile);
 
         //Get and set a profile image into view.
-        StorageReference currentUserProfileImageRef = storage.getReference().child("user/" + firebaseAuth.getCurrentUser().getUid() + "/profile.jpg");
+//        StorageReference currentUserProfileImageRef = storage.getReference().child("user/" + firebaseAuth.getCurrentUser().getUid() + "/profile.jpg");
 //        currentUserProfileImageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
 //            @Override
 //            public void onSuccess(Uri uri) {
