@@ -10,6 +10,9 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,6 +33,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.yanus.carevent.service.Repository;
 import com.yanus.carevent.R;
 import com.yanus.carevent.activity.MainActivity;
+import com.yanus.carevent.viewmodel.MyViewModel;
 
 public class ProfileFragment extends Fragment {
     public ImageView imageViewSingOut, imageViewProfile;
@@ -40,6 +44,7 @@ public class ProfileFragment extends Fragment {
     public FirebaseAuth firebaseAuth;
     public FirebaseDatabase firebaseDatabase;
     public Uri uriImage;
+    public MyViewModel viewModel;
 
 
     @Override
@@ -55,15 +60,13 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i("ProfileFragment", "onCreate");
 
         firebaseAuth = FirebaseAuth.getInstance();
         storage = FirebaseStorage.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
+        viewModel = new ViewModelProvider(this).get(MyViewModel.class);
 
-        if (savedInstanceState != null) {
-            uriImage = savedInstanceState.getParcelable("uri");
-        }
+        initProfileImageFromLiveData(ProfileFragment.this);
 
         currentUserNicknameRef = firebaseDatabase.getReference()
                 .child("users")
@@ -91,8 +94,8 @@ public class ProfileFragment extends Fragment {
                 new ActivityResultCallback<Uri>() {
                     @Override
                     public void onActivityResult(Uri uri) {
-                        Repository.getInstance().uploadImageToFirebase(ProfileFragment.this, uri);
-                        Glide.with(ProfileFragment.this).load(uri).centerCrop().into(imageViewProfile);
+                        viewModel.uploadProfileImageToFirebase(ProfileFragment.this, uri, firebaseAuth.getCurrentUser().getUid());
+                        initProfileImageFromLiveData(ProfileFragment.this);
                     }
                 });
     }
@@ -107,23 +110,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        Log.i("ProfileFragment", "onStart");
-
-        uriImage = Repository.getInstance().getCurrentUserImageProfile(firebaseAuth.getCurrentUser().getUid());
-        if (uriImage == null) Toast.makeText(getContext(), "uriImage = null", Toast.LENGTH_SHORT).show();
-        if (uriImage != null) Toast.makeText(getContext(), "uriImage работает", Toast.LENGTH_SHORT).show();
-        Glide.with(ProfileFragment.this).load(uriImage).centerCrop().into(imageViewProfile);
-
-        //Get and set a profile image into view.
-//        StorageReference currentUserProfileImageRef = storage.getReference().child("user/" + firebaseAuth.getCurrentUser().getUid() + "/profile.jpg");
-//        currentUserProfileImageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//            @Override
-//            public void onSuccess(Uri uri) {
-//                if (getActivity() != null) {
-//                    Glide.with(ProfileFragment.this).load(uri).centerCrop().into(imageViewProfile);
-//                }
-//            }
-//        });
 
         imageViewSingOut.setOnClickListener(view -> {
             FirebaseAuth.getInstance().signOut();
@@ -136,10 +122,10 @@ public class ProfileFragment extends Fragment {
     }
 
 
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putParcelable("uri", uriImage);
+    public void initProfileImageFromLiveData(Fragment fragment) {
+        viewModel.getLiveDataProfileImage(firebaseAuth.getCurrentUser().getUid()).observe(this, profileImageUri -> {
+            Glide.with(fragment).load(profileImageUri).centerCrop().into(imageViewProfile);
+        });
     }
 
 

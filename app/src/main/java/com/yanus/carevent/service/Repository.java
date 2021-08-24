@@ -6,6 +6,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -16,11 +18,14 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 public class Repository {
-    private StorageReference currentUserProfileImageRef;
     private static Repository instance;
-    FirebaseStorage storageInstance;
-    FirebaseAuth firebaseAuth;
-    public Uri image;
+    private StorageReference currentUserProfileImageRef;
+    private  FirebaseStorage storageInstance;
+    private  FirebaseAuth firebaseAuth;
+    private MutableLiveData<Uri> uriMutableLiveData;
+
+
+
 
     private Repository() {
         firebaseAuth = FirebaseAuth.getInstance();
@@ -42,15 +47,12 @@ public class Repository {
     }
 
 
-    public Uri getCurrentUserImageProfile(String uid) {
+    public void getCurrentUserImageProfile(String uid) {
         currentUserProfileImageRef = storageInstance.getReference().child("user/" + uid + "/profile.jpg");
         currentUserProfileImageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                image = uri;
-                Log.i("key", "1");
-                //TODO: Нужно использувать LiveData.
-
+               uriMutableLiveData.setValue(uri);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -59,15 +61,16 @@ public class Repository {
             }
         });
 
-        Log.i("key", "2");
-        return image;
+
     }
 
-    public void uploadImageToFirebase(Fragment fragment, Uri image) {
+    public void uploadProfileImageToFirebase(Fragment fragment, Uri image, String uid) {
+        currentUserProfileImageRef = storageInstance.getReference().child("user/" + uid + "/profile.jpg");
         currentUserProfileImageRef.putFile(image).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Toast.makeText(fragment.getContext(), "Фото добавленно", Toast.LENGTH_SHORT).show();
+                uriMutableLiveData.setValue(image);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -75,6 +78,14 @@ public class Repository {
                 Toast.makeText(fragment.getContext(), "Фото НЕ добавленно на сервер", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public LiveData<Uri> getUriImageLiveData() {
+        if (uriMutableLiveData == null) {
+            uriMutableLiveData = new MutableLiveData<>();
+        }
+
+        return uriMutableLiveData;
     }
 
 
