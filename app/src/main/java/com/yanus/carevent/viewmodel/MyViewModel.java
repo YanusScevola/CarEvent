@@ -20,12 +20,17 @@ public class MyViewModel extends ViewModel {
     }
 
     public LiveData<Uri> getLiveDataProfileImage(String uid) {
-        repository.getCurrentUserImageProfile(uid);
+        repository.getCurrentUserImageProfileFromFirebase(uid);
+        return repository.getUriImageLiveData();
+    }
+
+    public LiveData<Uri> getLiveDataProfileNickname(String uid) {
+        repository.getCurrentUserImageProfileFromFirebase(uid);
         return repository.getUriImageLiveData();
     }
 
     public void uploadProfileImageToFirebase(Fragment fragment, Uri image, String uid) {
-        repository.uploadProfileImageToFirebase(fragment, image, uid);
+        repository.uploadCurrentUserProfileImageToFirebase(fragment, image, uid);
     }
 
 

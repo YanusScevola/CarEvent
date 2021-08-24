@@ -1,7 +1,6 @@
 package com.yanus.carevent.service;
 
 import android.net.Uri;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,10 +21,8 @@ public class Repository {
     private StorageReference currentUserProfileImageRef;
     private  FirebaseStorage storageInstance;
     private  FirebaseAuth firebaseAuth;
-    private MutableLiveData<Uri> uriMutableLiveData;
-
-
-
+    private MutableLiveData<Uri> mutableLiveDataProfileImage;
+    private MutableLiveData<String> mutableLiveDataProfileNickname;
 
     private Repository() {
         firebaseAuth = FirebaseAuth.getInstance();
@@ -47,12 +44,12 @@ public class Repository {
     }
 
 
-    public void getCurrentUserImageProfile(String uid) {
+    public void getCurrentUserImageProfileFromFirebase(String uid) {
         currentUserProfileImageRef = storageInstance.getReference().child("user/" + uid + "/profile.jpg");
         currentUserProfileImageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-               uriMutableLiveData.setValue(uri);
+                mutableLiveDataProfileImage.setValue(uri);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -60,17 +57,19 @@ public class Repository {
 
             }
         });
+    }
 
+    public void getCurrentUserImageNicknameFromFirebase(String uid) {
 
     }
 
-    public void uploadProfileImageToFirebase(Fragment fragment, Uri image, String uid) {
+    public void uploadCurrentUserProfileImageToFirebase(Fragment fragment, Uri image, String uid) {
         currentUserProfileImageRef = storageInstance.getReference().child("user/" + uid + "/profile.jpg");
         currentUserProfileImageRef.putFile(image).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Toast.makeText(fragment.getContext(), "Фото добавленно", Toast.LENGTH_SHORT).show();
-                uriMutableLiveData.setValue(image);
+                mutableLiveDataProfileImage.setValue(image);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -81,11 +80,11 @@ public class Repository {
     }
 
     public LiveData<Uri> getUriImageLiveData() {
-        if (uriMutableLiveData == null) {
-            uriMutableLiveData = new MutableLiveData<>();
+        if (mutableLiveDataProfileImage == null) {
+            mutableLiveDataProfileImage = new MutableLiveData<>();
         }
 
-        return uriMutableLiveData;
+        return mutableLiveDataProfileImage;
     }
 
 

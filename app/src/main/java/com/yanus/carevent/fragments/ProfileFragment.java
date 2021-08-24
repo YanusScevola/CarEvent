@@ -66,7 +66,7 @@ public class ProfileFragment extends Fragment {
         firebaseDatabase = FirebaseDatabase.getInstance();
         viewModel = new ViewModelProvider(this).get(MyViewModel.class);
 
-        initProfileImageFromLiveData(ProfileFragment.this);
+        initProfileImageFromFirebase(ProfileFragment.this);
 
         currentUserNicknameRef = firebaseDatabase.getReference()
                 .child("users")
@@ -95,7 +95,7 @@ public class ProfileFragment extends Fragment {
                     @Override
                     public void onActivityResult(Uri uri) {
                         viewModel.uploadProfileImageToFirebase(ProfileFragment.this, uri, firebaseAuth.getCurrentUser().getUid());
-                        initProfileImageFromLiveData(ProfileFragment.this);
+                        initProfileImageFromFirebase(ProfileFragment.this);
                     }
                 });
     }
@@ -122,7 +122,7 @@ public class ProfileFragment extends Fragment {
     }
 
 
-    public void initProfileImageFromLiveData(Fragment fragment) {
+    public void initProfileImageFromFirebase(Fragment fragment) {
         viewModel.getLiveDataProfileImage(firebaseAuth.getCurrentUser().getUid()).observe(this, profileImageUri -> {
             Glide.with(fragment).load(profileImageUri).centerCrop().into(imageViewProfile);
         });
